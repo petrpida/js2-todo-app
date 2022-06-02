@@ -1,0 +1,7 @@
+v komponentě PersonFormPage
+ok 1) vyřešit nadpis - add person / edit person
+ok 2) napsat si html form
+ok 3) v created hooku načíst záznam z db, pokud jsme tedy v edit módu
+ok 4) vytvořit si datovou proměnnou - object person se všemi vlastnostmi  a navázat jednotlivé vlastnosti na inputy
+ok 5) nezapomenout inputům dát id a labelům atribut for
+ok 6) chování formuláře po submitu - uložení buň nového nebo existujícího záznamu a přesměrování buď na seznam nebo na detail
