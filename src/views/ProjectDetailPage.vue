@@ -3,6 +3,7 @@
   <t-loading v-if="loading" />
 
   <template v-else>
+    <t-button label="edit" @clicked="onClicked" />
     <ul class="detail-list">
       <li>
         <div>project name:</div>
@@ -21,7 +22,7 @@
         <div class="text-bold">{{ project.ends }}</div>
       </li>
     </ul>
-    <t-button label="edit" @clicked="onClicked" />
+    <task-list :tasks="tasks"/>
   </template>
 </template>
 
@@ -30,32 +31,40 @@ import db from "../utils/db.js";
 import { formatDate } from "../utils/dateUtils.js";
 import TLoading from "../components/TLoading.vue";
 import TButton from "../components/TButton.vue";
+import TaskList from "../components/TaskList.vue";
+
 
 export default {
   name: "ProjectDetailPage",
   data() {
     return {
       project: {},
+      tasks: [],
       loading: true,
     };
   },
   created() {
-    db.get("projects/" + this.$route.params.id).then((record) => {
+    const projectsData = db.get("projects/" + this.$route.params.id).then((record) => {
       this.project = {
         project: record.project,
         description: record.description,
         start: formatDate(record.start),
         ends: formatDate(record.ends),
       };
-      this.loading = false;
     });
+    const tasksData = db.get('/tasks?projectid=' + this.$route.params.id).then(data => {
+      this.tasks = data
+    });
+    Promise.all([projectsData, tasksData]).then(() => {
+      this.loading = false
+    })
   },
   methods: {
     onClicked() {
       this.$router.push("/projectform/" + this.$route.params.id);
     },
   },
-  components: { TLoading, TButton },
+  components: { TLoading, TButton, TaskList },
 };
 </script>
 
