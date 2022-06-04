@@ -10,6 +10,7 @@
       :control="item"
       :type="controls[item].type"
       :label="controls[item].label"
+      :typeInput="controls[item].typeInput"
       :value="project[item]"
       @has-input="onHasInput"
     />
@@ -52,6 +53,7 @@ export default {
         description: {
           type: "text",
           label: "description",
+          typeInput: false
         },
         start: {
           type: "date",

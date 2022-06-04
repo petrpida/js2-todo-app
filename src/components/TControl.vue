@@ -1,7 +1,8 @@
 <template>
   <div class="form-control">
     <label :for="control">{{ label }}</label>
-    <input @input="onInput" :id="control" :type="type" :value="value" autocomplete="off" />
+    <input v-if="typeInput" @input="onInput" :id="control" :type="type" :value="value" autocomplete="off" />
+    <textarea v-else @input="onInput" :id="control" :type="type" :value="value" autocomplete="off" rows="4"/>
   </div>
 </template>
 
@@ -22,6 +23,10 @@ export default {
         },
         label: {
             type: String
+        },
+        typeInput: {
+            type: Boolean,
+            default: true
         }
     },
     methods: {
@@ -40,9 +45,12 @@ export default {
   flex-direction: column
   text-align: left
   margin-bottom: 2rem
-  
+
 .form-control input
   font-size: 1.2rem
+  padding: .35em .75em
+
+textarea
   padding: .35em .75em
 
 </style>
