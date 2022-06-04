@@ -36,9 +36,8 @@ export default {
   list-style-type: none
   margin: 0 auto
   padding: 0
-  border: 1px solid $border
   width: 80%
-  max-width: 450px
+  max-width: 550px
   & li
     padding: .25rem
 
