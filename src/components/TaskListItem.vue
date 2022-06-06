@@ -1,5 +1,5 @@
 <template>
-  <li @click="showDiv = !showDiv">
+  <li @click="onClick">
     <div
       class="task-item-flex"
       :class="{
@@ -7,8 +7,8 @@
         'task-started': status === 'started',
       }"
     >
-      <div class="text-bold">{{ task }}</div>
-      <div class="w-30">
+      <div class="text-bold w-45">{{ task }}</div>
+      <div class="w-45">
         <div class="text-small task-item-flex">
           <div>deadline:</div>
           <div>{{ dateToDisplay }}</div>
@@ -18,6 +18,7 @@
           <div>{{ priority }}</div>
         </div>
       </div>
+      <button v-if="!showDiv" class="btn-detail" @click="showDiv = !showDiv">show description</button>
     </div>
     <transition name="slide-down">
       <div v-if="showDiv" class="task-item-flex pt-1" :class="{
@@ -29,6 +30,7 @@
           <div>status:</div>
           <div>{{ status }}</div>
         </div>
+      <button class="btn-detail" @click="showDiv = !showDiv">hide description</button>
       </div>
     </transition>
   </li>
@@ -40,6 +42,7 @@ import { formatDate } from "../utils/dateUtils.js";
 export default {
   name: "TaskListItem",
   props: {
+    taskid: Number,
     task: String,
     taskdate: String,
     status: String,
@@ -58,6 +61,11 @@ export default {
       return formatDate(this.taskdate);
     },
   },
+  methods: {
+    onClick () {
+      this.$router.push('/taskdetail/' + this.taskid )
+    }
+  }
 };
 </script>
 
@@ -69,9 +77,10 @@ export default {
     display: flex
     justify-content: space-between
     align-items: center
+    flex-wrap: wrap
 
-.w-30
-    width: 30%
+.w-45
+    width: 45%
 
 li:hover
     background-color: $secondary

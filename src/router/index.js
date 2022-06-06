@@ -7,6 +7,8 @@ import ProjectDetailPage from '../views/ProjectDetailPage.vue'
 import PersonDetailPage from '../views/PersonDetailPage.vue'
 import ProjectFormPage from '../views/ProjectFormPage.vue'
 import PersonFormPage from '../views/PersonFormPage.vue'
+import TaskFormPage from '../views/TaskFormPage.vue'
+import TaskDetailPage from '../views/TaskDetailPage' 
 
 
 const routes = [
@@ -21,7 +23,12 @@ const routes = [
   { path: '/projectform', name: 'projectFormAdd', component: ProjectFormPage },
 
   { path: '/personform/:id', name: 'personFormEdit', component: PersonFormPage },
-  { path: '/personform', name: 'personFormAdd', component: PersonFormPage }
+  { path: '/personform', name: 'personFormAdd', component: PersonFormPage },
+
+  { path: '/taskform/:projectid', name: 'taskFormAdd', component: TaskFormPage },
+  { path: '/taskformedit/:taskid', name: 'taskFormEdit', component: TaskFormPage },
+  { path: '/taskdetail/:taskid', name: 'taskDetail', component: TaskDetailPage }
+
 
   // {
   //   path: '/',

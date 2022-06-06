@@ -70,11 +70,11 @@ export default {
   text-align: left
   margin-bottom: 2rem
 
-.form-control input
+.form-control input, .form-control select
   font-size: 1.2rem
-  padding: .35em .75em
+  padding: .35em .7em
 
 textarea
-  padding: .35em .75em
+  padding: .5em 1em
 
 </style>

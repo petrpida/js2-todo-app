@@ -3,6 +3,7 @@
     <task-list-item 
     v-for="item in tasks"
     :key="item.id"
+    :taskid="item.id"
     :task="item.task"
     :taskdate="item.taskdate"
     :status="item.status"
