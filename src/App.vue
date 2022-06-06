@@ -63,6 +63,9 @@ body, html
 .text-right
   text-align: right
 
+.text-red
+  color: red
+
 form
   width: 80%
   max-width: 500px

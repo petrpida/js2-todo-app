@@ -1,5 +1,5 @@
 <template>
-  <li @click="onClick">
+  <li class="list" @click="onClick">
     <div
       class="task-item-flex"
       :class="{
@@ -7,32 +7,11 @@
         'task-started': status === 'started',
       }"
     >
-      <div class="text-bold w-45 text-left">{{ task }}</div>
-      <div class="w-45">
-        <div class="text-small task-item-flex">
-          <div>deadline:</div>
-          <div>{{ dateToDisplay }}</div>
-        </div>
-        <div class="pt-1 text-small task-item-flex">
-          <div>priorty:</div>
-          <div>{{ priority }}</div>
-        </div>
-      </div>
-      <button v-if="!showDiv" class="btn-detail" @click="showDiv = !showDiv">show description</button>
+      <div class="priority text-bold">{{ priorityLevel }}</div>
+      <div class="task text-bold text-left">{{ task }}</div>
+      <div class="status text-small">{{ status }}</div>
+      <div class="deadline" :class="{'text-red text-bold': isLate}">{{ dateToDisplay }}</div>
     </div>
-    <transition name="slide-down">
-      <div v-if="showDiv" class="task-item-flex pt-1" :class="{
-        'task-done': status === 'done',
-        'task-started': status === 'started',
-      }">
-        <div class="text-small">{{ description }}</div>
-        <div class="text-small task-item-flex w-30">
-          <div>status:</div>
-          <div>{{ status }}</div>
-        </div>
-      <button class="btn-detail" @click="showDiv = !showDiv">hide description</button>
-      </div>
-    </transition>
   </li>
 </template>
 
@@ -51,15 +30,21 @@ export default {
       validator: (v) => typeof v === "string" || v === null,
     },
   },
-  data() {
-    return {
-      showDiv: false,
-    };
-  },
   computed: {
     dateToDisplay() {
       return formatDate(this.taskdate);
     },
+    isLate () {
+      if (this.status === 'done') return false
+      const today = new Date ()
+      const deadline = new Date (this.taskdate)
+      return deadline.getTime() < today.getTime()
+    },
+    priorityLevel () {
+      if (this.status === 'done') return ''
+      if (this.priority === 'high') return '!!!'
+      return this.priority === 'standard' ? '!' : '' 
+    }
   },
   methods: {
     onClick () {
@@ -77,14 +62,15 @@ export default {
     display: flex
     justify-content: space-between
     align-items: center
-    flex-wrap: wrap
 
-.w-45
-    width: 45%
+.list
+  border-top: 3px solid white
+  border-bottom: 3px solid white
 
 li:hover
-    background-color: $secondary
-    cursor: pointer
+  border-top-color: $secondary
+  border-bottom-color: $secondary
+  cursor: pointer
 
 .task-done
   background: $task-done-color
@@ -92,6 +78,24 @@ li:hover
 .task-started
   background: $primary
 
-li > div
-    padding: 15px
+.list > div
+  padding: 15px 5px
+
+.priority 
+  width: 10%
+
+.task
+  width: 40%
+  padding-left: 30px
+
+.status
+  width: 25%
+
+.deadline
+  width: 25%
+
+.description
+  width: 65%
+
+
 </style>

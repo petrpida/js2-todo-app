@@ -58,6 +58,7 @@ export default {
   padding: 0
   border: 1px solid $border
   width: 80%
+  max-width: 750px
   margin: 0 auto
 
 .t-list li

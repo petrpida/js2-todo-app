@@ -39,7 +39,6 @@ export default {
   padding: 0
   width: 80%
   max-width: 550px
-  & li
-    padding: .25rem
+
 
 </style>
