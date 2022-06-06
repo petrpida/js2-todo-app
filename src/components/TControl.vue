@@ -17,7 +17,9 @@
       :value="value"
       autocomplete="off"
     >
-      <option value=""></option>
+      <option v-for="item in options" :key="control + item" :value="item">
+        {{ item }}
+      </option>
     </select>
     <input
       v-else
@@ -43,12 +45,16 @@ export default {
       default: "text",
     },
     value: {
-      validator: (v) => {
-        typeof v === "string" || typeof v === "number" || v === null;
-      },
+      validator: (v) =>
+        typeof v === "string" || typeof v === "number" || v === null,
+      required: true,
     },
     label: {
       type: String,
+    },
+    options: {
+      type: Array,
+      default: () => [],
     },
   },
   methods: {
@@ -76,5 +82,4 @@ export default {
 
 textarea
   padding: .5em 1em
-
 </style>

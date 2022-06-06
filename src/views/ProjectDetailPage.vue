@@ -3,7 +3,9 @@
   <t-loading v-if="loading" />
 
   <template v-else>
-    <t-button label="edit" @clicked="onClicked" />
+    <t-button label="edit" @clicked="onEditClicked" class="mr-1"/>
+    <t-button label="add task" @clicked="onAddTaskClicked" />
+
     <ul class="detail-list">
       <li>
         <div>project name:</div>
@@ -60,9 +62,12 @@ export default {
     })
   },
   methods: {
-    onClicked() {
+    onEditClicked () {
       this.$router.push("/projectform/" + this.$route.params.id);
     },
+    onAddTaskClicked () {
+      this.$router.push('/taskform/' + this.$route.params.id)
+    }
   },
   components: { TLoading, TButton, TaskList },
 };
