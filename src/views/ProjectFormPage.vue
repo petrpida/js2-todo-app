@@ -51,9 +51,8 @@ export default {
           label: "project name",
         },
         description: {
-          type: "text",
+          type: "textarea",
           label: "description",
-          typeInput: false
         },
         start: {
           type: "date",
@@ -103,12 +102,3 @@ export default {
   components: { TButton, TLoading, TControl },
 };
 </script>
-
-<style lang="stylus" scoped>
-
-form
-  width: 80%
-  max-width: 500px
-  margin: 0 auto
-
-</style>

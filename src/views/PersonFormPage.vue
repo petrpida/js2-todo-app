@@ -143,22 +143,3 @@ export default {
   components: { TButton, TLoading, TControl },
 };
 </script>
-
-<style lang="stylus" scoped>
-
-// nebylo by vic DRY cely form udelat jako component?
-form
-  width: 80%
-  max-width: 500px
-  margin: 0 auto
-
-.form-control
-  display: flex
-  flex-direction: column
-  text-align: left
-  margin-bottom: 2rem
-
-.form-control input
-  font-size: 1.2rem
-  padding: .35em .75em
-</style>
