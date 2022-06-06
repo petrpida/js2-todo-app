@@ -7,7 +7,7 @@
         'task-started': status === 'started',
       }"
     >
-      <div class="text-bold w-45">{{ task }}</div>
+      <div class="text-bold w-45 text-left">{{ task }}</div>
       <div class="w-45">
         <div class="text-small task-item-flex">
           <div>deadline:</div>

@@ -11,7 +11,7 @@
       </li>
       <li>
         <div>description:</div>
-        <div class="text-bold">{{ project.description || "-" }}</div>
+        <div class="text-bold text-right">{{ project.description || "-" }}</div>
       </li>
       <li>
         <div>start date:</div>
@@ -69,13 +69,17 @@ export default {
 </script>
 
 <style lang="stylus">
+@import '../styles/variables.styl'
+
 .detail-list
   list-style-type: none
   margin: 2rem auto
   padding: 0
-  width: 350px
+  width: 80%
+  max-width: 550px
   & li
     display: flex
     justify-content: space-between
     padding: .5rem
+    border-bottom: 1px solid $border-light
 </style>
