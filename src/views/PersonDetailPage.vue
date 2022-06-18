@@ -79,24 +79,6 @@ export default {
           description: item.description
         }
       })
-      .sort((a, b) => {
-        let aSortingString = a.status === 'started' ? 'A' : 'B'
-        let bSortingString = b.status === 'started' ? 'A' : 'B'
-        if (a.priority === 'high') {
-          aSortingString += 'A'
-        } else {
-          aSortingString += a.priority === 'standard' ? 'B' : 'C'
-          }
-        if (b.priority === 'high') {
-          bSortingString += 'A'
-        } else {
-          bSortingString += b.priority === 'standard' ? 'B' : 'C'
-        }
-        aSortingString += a.taskdate
-        bSortingString += b.taskdate
-
-        return aSortingString.localeCompare(bSortingString)
-      })
     }
   },
   methods: {
