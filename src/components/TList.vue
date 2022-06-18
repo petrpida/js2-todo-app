@@ -13,7 +13,7 @@
       </div>
       <div class="dates">
         <div class="description">{{ item.rightTop }}</div>
-        <div class="description">{{ item.rightBottom }}</div>
+        <div class="description text-bold">{{ item.rightBottom }}</div>
       </div>
     </li>
   </ul>

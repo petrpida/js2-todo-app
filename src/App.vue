@@ -54,6 +54,9 @@ body, html
 .pt-1
   padding-top: 1rem
 
+.pl-3
+  padding-left: 3rem
+
 .text-small
   font-size: 0.8rem
 

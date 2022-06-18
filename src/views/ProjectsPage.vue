@@ -34,27 +34,30 @@ export default {
   },
   computed: {
     projectsToDisplay () {
-      return this.projects.map(project => {
+      return this.projects
+      .slice()
+      .sort ((a, b) => {
+        a.ends.localeCompare(b.ends)
+      })
+      .map(project => {
         return {
           id: project.id,
           title: project.project,
           description: project.description || '',
           rightTop: formatDate(project.start),
-          rightBottom: formatDate(project.ends)
+          rightBottom: formatDate(project.ends),
         }
       })
     }
   },
   created() {
     db.get('projects').then(data => {
-      // console.log(data)
       this.projects = data
       this.loading = false
     })
   },
   methods: {
     onClicked () {
-      // zobrazit formulář
       this.$router.push('/projectform')
     }
   },

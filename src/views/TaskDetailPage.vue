@@ -10,15 +10,15 @@
     <ul class="detail-list">
       <li>
         <div>task name:</div>
-        <div class="text-bold">{{ task.task }}</div>
+        <div class="text-bold pl-3 text-right">{{ task.task }}</div>
       </li>
       <li>
         <div>project name:</div>
-        <div>{{ task.project }}</div>
+        <div class="pl-3 text-right">{{ task.project }}</div>
       </li>
       <li>
         <div>description:</div>
-        <div>{{ task.description }}</div>
+        <div class="pl-3 text-right">{{ task.description }}</div>
       </li>
       <li>
         <div>status:</div>
