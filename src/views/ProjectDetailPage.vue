@@ -24,7 +24,7 @@
         <div class="text-bold">{{ project.ends }}</div>
       </li>
     </ul>
-    <task-list :tasks="tasks"/>
+    <task-list :tasks="tasksSorted"/>
   </template>
 </template>
 
@@ -60,6 +60,28 @@ export default {
     Promise.all([projectsData, tasksData]).then(() => {
       this.loading = false
     })
+  },
+  computed: {
+    tasksSorted () {
+      return this.tasks.slice().sort((a, b) => {
+        let aSortingString = a.status === 'started' ? 'A' : 'B'
+        let bSortingString = b.status === 'started' ? 'A' : 'B'
+        if (a.priority === 'high') {
+          aSortingString += 'A'
+        } else {
+          aSortingString += a.priority === 'standard' ? 'B' : 'C'
+          }
+        if (b.priority === 'high') {
+          bSortingString += 'A'
+        } else {
+          bSortingString += b.priority === 'standard' ? 'B' : 'C'
+        }
+        aSortingString += a.taskdate
+        bSortingString += b.taskdate
+
+        return aSortingString.localeCompare(bSortingString)
+      })
+    }
   },
   methods: {
     onEditClicked () {
