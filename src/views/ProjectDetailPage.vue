@@ -4,12 +4,14 @@
 
   <template v-else>
     <t-button label="edit" @clicked="onEditClicked" class="mr-1"/>
-    <t-button label="add task" @clicked="onAddTaskClicked" />
+    <t-button label="add task" @clicked="onAddTaskClicked" :class="{'mr-1' : !tasks.length}" />
+    <t-button v-if="!tasks.length" label="delete project" @clicked="onDeleteProjectClicked" />
+
 
     <ul class="detail-list">
       <li>
         <div>project name:</div>
-        <div class="text-bold">{{ project.project }}</div>
+        <div class="text-bold text-right">{{ project.project }}</div>
       </li>
       <li>
         <div>description:</div>
@@ -24,7 +26,8 @@
         <div class="text-bold">{{ project.ends }}</div>
       </li>
     </ul>
-    <task-list :tasks="tasks"/>
+    <task-list v-if="tasks.length" :tasks="tasks"/>
+    <h4 v-else>this project has no tasks yet</h4>
   </template>
 </template>
 
@@ -67,6 +70,11 @@ export default {
     },
     onAddTaskClicked () {
       this.$router.push('/taskform/' + this.$route.params.id)
+    },
+    onDeleteProjectClicked () {
+      db.delete ('/projects', {id: this.$route.params.id}).then(() => {
+        this.$router.push('/projects')
+      })
     }
   },
   components: { TLoading, TButton, TaskList },

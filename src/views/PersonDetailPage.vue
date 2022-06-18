@@ -10,31 +10,32 @@
     <ul class="detail-list">
     <li>
       <div>first name: </div>
-      <div class="text-bold">{{ person.first }}</div>
+      <div class="text-bold text-rihgt">{{ person.first }}</div>
     </li>
     <li>
       <div>last name: </div>
-      <div class="text-bold">{{ person.last }}</div>
+      <div class="text-bold text-rihgt">{{ person.last }}</div>
     </li>
     <li>
       <div>position: </div>
-      <div class="text-bold">{{ person.position || '-' }}</div>
+      <div class="text-bold text-rihgt">{{ person.position || '-' }}</div>
     </li>
     <li>
       <div>skills: </div>
-      <div class="text-bold">{{ person.skills || '-' }}</div>
+      <div class="text-bold text-rihgt">{{ person.skills || '-' }}</div>
     </li>
     <li>
       <div>email: </div>
-      <div class="text-bold">{{ person.email }}</div>
+      <div class="text-bold text-rihgt">{{ person.email }}</div>
     </li>
     <li>
       <div>phone: </div>
-      <div class="text-bold">{{ person.phone || '-' }}</div>
+      <div class="text-bold text-rihgt">{{ person.phone || '-' }}</div>
     </li>
   </ul>
 
   <task-list v-if="tasks.length" :tasks="tasksToDisplay" />
+  <h4 v-else>{{ `${person.last} ${person.first} has no tasks yet`}}</h4>
   </template>
   
 </template>
