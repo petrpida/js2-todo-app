@@ -86,7 +86,9 @@ export default {
       this.$router.push('/personform/' + this.$route.params.id)
     },
     onDeletePersonClicked () {
-      console.log('person deleted')
+      db.delete('/persons', {id: this.$route.params.id}).then(() => {
+        this.$router.push('/persons')
+      })
     }
   },
   components: { TLoading, TButton, TaskList }
