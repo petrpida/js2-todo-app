@@ -22,7 +22,7 @@
 button
   background: $secondary
   color: white
-  margin-bottom: 2rem 
+  margin-bottom: 1rem 
   padding: .5em .8em
   font-size: 1.1rem
   border-radius: 5px
