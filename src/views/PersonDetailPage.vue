@@ -4,6 +4,7 @@
   <t-loading v-if="loading"/>
 
   <template v-else>
+    <t-button label="edit" @clicked="onClicked"/>
     <ul class="detail-list">
     <li>
       <div>first name: </div>
@@ -30,7 +31,6 @@
       <div class="text-bold">{{ person.phone || '-' }}</div>
     </li>
   </ul>
-  <t-button label="edit" @clicked="onClicked"/>
   </template>
   
 </template>

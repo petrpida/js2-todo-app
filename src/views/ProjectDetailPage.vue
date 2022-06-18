@@ -72,19 +72,3 @@ export default {
   components: { TLoading, TButton, TaskList },
 };
 </script>
-
-<style lang="stylus">
-@import '../styles/variables.styl'
-
-.detail-list
-  list-style-type: none
-  margin: 2rem auto
-  padding: 0
-  width: 80%
-  max-width: 550px
-  & li
-    display: flex
-    justify-content: space-between
-    padding: .5rem
-    border-bottom: 1px solid $border-light
-</style>
