@@ -25,6 +25,7 @@ export default {
   -moz-osx-font-smoothing grayscale
   text-align center
   color $text
+  padding-bottom 2rem
 
 body, html
   margin: 0
@@ -44,6 +45,9 @@ body, html
 
 .mr-1
   margin-right: 1rem
+
+.mt-1
+  margin-top: 1rem
 
 .pr-1
   padding-right: 1rem
