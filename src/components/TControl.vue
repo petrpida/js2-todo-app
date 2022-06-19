@@ -3,19 +3,23 @@
     <label :for="control">{{ label }}</label>
     <textarea
       v-if="type === 'textarea'"
-      @input="onInput"
       :id="control"
       :value="value"
       autocomplete="off"
       rows="5"
       class="resize-none"
+      :class="{'invalid' : error}"
+      @input="onInput"
+      @blur="onBlured"
     />
     <select
       v-else-if="type === 'select'"
-      @input="onInput"
       :id="control"
       :value="value"
       autocomplete="off"
+      :class="{'invalid' : error}"
+      @input="onInput"
+      @blur="onBlured"
     >
       <option v-for="item in options" :key="control + item" :value="item">
         {{ item }}
@@ -23,12 +27,15 @@
     </select>
     <input
       v-else
-      @input="onInput"
       :id="control"
       :type="type"
       :value="value"
       autocomplete="off"
+      :class="{'invalid' : error}"
+      @input="onInput"
+      @blur="onBlured"
     />
+    <div v-if="error" class="error-message">errorMessage</div>
   </div>
 </template>
 
@@ -56,6 +63,14 @@ export default {
       type: Array,
       default: () => [],
     },
+    error: {
+      type: Boolean,
+      default: false
+    },
+    errorMessage: {
+      type: String,
+      default: ''
+    }
   },
   methods: {
     onInput(event) {
@@ -64,6 +79,9 @@ export default {
         control: this.control,
       });
     },
+    onBlured () {
+      this.$emit('blured', this.control)
+    }
   },
 };
 </script>
@@ -75,6 +93,7 @@ export default {
   flex-direction: column
   text-align: left
   margin-bottom: 2rem
+  position: relative
 
 .form-control input, .form-control select
   font-size: 1.2rem
@@ -82,4 +101,15 @@ export default {
 
 textarea
   padding: .5em 1em
+
+.invalid
+  border-color: red
+
+.error-message
+  color: red
+  position: absolute
+  top: 100%
+  font-size: .8rem
+
+
 </style>
