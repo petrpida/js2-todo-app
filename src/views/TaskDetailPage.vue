@@ -3,7 +3,7 @@
   <t-loading v-if="loading" />
 
   <template v-else>
-    <t-modal :show="showAddPersonModal">
+    <t-modal :show="showAddPersonModal" @close-modal="showAddPersonModal = false">
       <p>
         select person for task: <span class="text-bold">{{ task.task }}</span>
       </p>
