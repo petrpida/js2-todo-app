@@ -37,7 +37,7 @@ export default {
       return this.projects
       .slice()
       .sort ((a, b) => {
-        a.ends.localeCompare(b.ends)
+        return a.ends.localeCompare(b.ends)
       })
       .map(project => {
         return {
