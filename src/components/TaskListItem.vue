@@ -7,10 +7,10 @@
         'task-started': status === 'started',
       }"
     >
-      <div class="priority text-bold">{{ priorityLevel }}</div>
       <div class="task text-bold text-left">{{ task }}</div>
+      <div class="priority text-bold">{{ priorityLevel }}</div>
       <div class="status text-small">{{ status }}</div>
-      <div class="deadline" :class="{'text-red text-bold': isLate}">{{ dateToDisplay }}</div>
+      <div class="deadline text-right" :class="{'text-red text-bold': isLate}">{{ dateToDisplay }}</div>
     </div>
   </li>
 </template>
@@ -64,12 +64,14 @@ export default {
     align-items: center
 
 .list
-  border-top: 3px solid white
-  border-bottom: 3px solid white
+  //border-top: 3px solid white
+  border-bottom: 4px solid $border-light
 
 li:hover
-  border-top-color: $secondary
-  border-bottom-color: $secondary
+  //border-top-color: $secondary
+  //border-top: 6px solid $secondary
+  border-bottom: 4px solid $secondary
+  //border-bottom-color: $secondary
   cursor: pointer
 
 .task-done
@@ -86,16 +88,12 @@ li:hover
 
 .task
   width: 40%
-  padding-left: 30px
+  padding-left: 10px
 
 .status
   width: 25%
 
 .deadline
   width: 25%
-
-.description
-  width: 65%
-
 
 </style>
