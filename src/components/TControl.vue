@@ -10,7 +10,7 @@
       class="resize-none"
       :class="{'invalid' : error}"
       @input="onInput"
-      @blur="onBlured"
+      @blur="onBlur"
     />
     <select
       v-else-if="type === 'select'"
@@ -19,7 +19,7 @@
       autocomplete="off"
       :class="{'invalid' : error}"
       @input="onInput"
-      @blur="onBlured"
+      @blur="onBlur"
     >
       <option v-for="item in options" :key="control + item" :value="item">
         {{ item }}
@@ -33,9 +33,9 @@
       autocomplete="off"
       :class="{'invalid' : error}"
       @input="onInput"
-      @blur="onBlured"
+      @blur="onBlur"
     />
-    <div v-if="error" class="error-message">errorMessage</div>
+    <div v-if="error" class="error-message">{{ errorMessage }}</div>
   </div>
 </template>
 
@@ -79,7 +79,7 @@ export default {
         control: this.control,
       });
     },
-    onBlured () {
+    onBlur () {
       this.$emit('blured', this.control)
     }
   },

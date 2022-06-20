@@ -3,143 +3,107 @@
 
   <t-loading v-if="loading" />
 
-  <form v-else @submit="onSubmit">
-    <t-control
-      v-for="item in controlKeys"
-      :key="item"
-      :control="item"
-      :type="controls[item].type"
-      :label="controls[item].label"
-      :value="person[item]"
-      @has-input="onHasInput"
-    />
+  <t-form v-else :controls="controls" @submitted="onSubmitted"/>
 
-    <!-- <div class="form-control">
-      <label for="first">first name</label>
-      <input v-model="person.first" id="first" type="text" autocomplete="off" />
-    </div>
-    <div class="form-control">
-      <label for="last">last name</label>
-      <input v-model="person.last" id="last" type="text" autocomplete="off" />
-    </div>
-    <div class="form-control">
-      <label for="position">position</label>
-      <input
-        v-model="person.position"
-        id="position"
-        type="text"
-        autocomplete="off"
-      />
-    </div>
-    <div class="form-control">
-      <label for="skills">skills</label>
-      <input
-        v-model="person.skills"
-        id="skills"
-        type="text"
-        autocomplete="off"
-      />
-    </div>
-    <div class="form-control">
-      <label for="email">email</label>
-      <input
-        v-model="person.email"
-        id="email"
-        type="email"
-        autocomplete="off"
-      />
-    </div>
-    <div class="form-control">
-      <label for="phone">phone</label>
-      <input v-model="person.phone" id="phone" type="tel" autocomplete="off" />
-    </div> -->
-    <t-button label="submit" />
-  </form>
 </template>
 
 <script>
 import db from "../utils/db.js";
-import TButton from "../components/TButton.vue";
 import TLoading from "../components/TLoading.vue";
-import TControl from "../components/TControl.vue";
+import TForm from "../components/TForm.vue";
 
 export default {
   name: "PersonFormPage",
   data() {
     return {
-      person: {
-        first: "",
-        last: "",
-        position: "",
-        skills: "",
-        email: "",
-        phone: "",
-      },
       controls: {
         first: {
           type: "text",
           label: "first name",
+          initialValue: '',
+          validationRules: [
+            {rule: 'required', message: 'please enter your first name'},
+            {rule: 'minLength', par: 2, message: 'minimum length is 2 characters'},
+            {rule: 'maxLength', par: 30, message: 'maximum length is 30 characters'}
+          ]
         },
         last: {
           type: "text",
           label: "last name",
+          initialValue: '',
+          validationRules: [
+            {rule: 'required', message: 'please enter your last name'},
+            {rule: 'minLength', par: 2, message: 'minimum length is 2 characters'},
+            {rule: 'maxLength', par: 50, message: 'maximum length is 50 characters'}
+          ]
         },
         email: {
           type: "email",
           label: "email",
+          initialValue: '',
+          validationRules: [
+            {rule: 'required', message: 'please enter your first name'},
+            ]
         },
         phone: {
           type: "tel",
           label: "phone",
+          initialValue: '',
+          validationRules: []
         },
         position: {
           type: "text",
           label: "position",
+          initialValue: '',
+          validationRules: []
         },
         skills: {
           type: "text",
           label: "skills",
+          initialValue: '',
+          validationRules: []
         },
       },
       loading: true,
     };
   },
   created() {
-    if (this.$route.params.id) {
+    if (!this.$route.params.id) {
+      this.loading = false
+      return
+    }
       db.get("/persons/" + this.$route.params.id).then((record) => {
-        this.person = record;
+        this.controlsKeys.forEach(item => {
+          this.controls[item].initialValue = record[item]
+        })
         this.loading = false;
       });
-    }
-    this.loading = false;
   },
   computed: {
     title() {
       return this.$route.params.id ? "edit person" : "add person";
     },
-    controlKeys () {
+    controlsKeys () {
       return Object.keys(this.controls)
-    }
+    },
+    
   },
   methods: {
-    onSubmit(e) {
-      e.preventDefault();
-
+    onSubmitted() {
+      console.log('submit clicked')
       // pri ukladani dat, pokud server neodpovida, nebo je spatny net, tak nepoznam, ze jestli se neco deje
 
-      if (!this.$route.params.id) {
-        db.post("/persons", this.person).then(() => {
-          this.$router.push("/persons");
-        });
-      }
-      db.put("/persons", this.person).then(() => {
-        this.$router.push("/persons/" + this.$route.params.id);
-      });
-    },
-    onHasInput(payload) {
-      this.person[payload.control] = payload.value;
+      // if (!this.$route.params.id) {
+      //   db.post("/persons", this.person).then(() => {
+      //     this.$router.push("/persons");
+      //   });
+      // }
+      // db.put("/persons", this.person).then(() => {
+      //   this.$router.push("/persons/" + this.$route.params.id);
+      // });
     },
   },
-  components: { TButton, TLoading, TControl },
+  emits: ['onSubmitted'],
+  components: { TLoading, TForm },
 };
 </script>
