@@ -64,21 +64,20 @@ export default {
     align-items: center
 
 .list
-  //border-top: 3px solid white
-  border-bottom: 4px solid $border-light
+  border-bottom: 1px solid white
 
 li:hover
-  //border-top-color: $secondary
-  //border-top: 6px solid $secondary
-  border-bottom: 4px solid $secondary
-  //border-bottom-color: $secondary
   cursor: pointer
 
 .task-done
   background: $task-done-color
+  &:hover
+    background: darken($task-done-color, 10)
 
 .task-started
-  background: $primary
+  background: $task-started-color
+  &:hover
+    background: darken($task-started-color, 10)
 
 .list > div
   padding: 15px 5px
