@@ -1,7 +1,9 @@
 <template>
-  <t-modal :show="showModal">
+  <t-modal :show="showModal" @close-modal="showModal=false">
     <p>The form contains error(s) and can't be submitted!</p>
+    <t-button label="OK" @clicked="showModal=false"/>
   </t-modal>
+
   <form @submit="onSubmit">
     <t-control
       v-for="item in controlsKeys"
@@ -17,7 +19,7 @@
       @blured="onBlured"
     />
 
-    <t-button label="submit" />
+    <t-button label="submit"/>
   </form>
 </template>
 
@@ -91,8 +93,27 @@ export default {
 
     onSubmit(e) {
       e.preventDefault();
-      this.$emit("submitted");
+
+      this.controlsKeys.forEach(control => {
+        this.validate(control)
+      }) 
+
+      if(this.allControlsErrors) {
+        this.showModal = true
+        return
+      }
+
+      this.sendFormData()
     },
+
+    sendFormData () {
+      let data = {}
+
+      this.controlsKeys.forEach(control => {
+        data[control] = this.controlsData[control].value
+      })
+      this.$emit("submitted", data);
+    }
   },
   emits: ["submitted"],
   components: { TControl, TButton, TModal },

@@ -89,21 +89,19 @@ export default {
     
   },
   methods: {
-    onSubmitted() {
-      console.log('submit clicked')
+    onSubmitted(data) {
       // pri ukladani dat, pokud server neodpovida, nebo je spatny net, tak nepoznam, ze jestli se neco deje
 
-      // if (!this.$route.params.id) {
-      //   db.post("/persons", this.person).then(() => {
-      //     this.$router.push("/persons");
-      //   });
-      // }
-      // db.put("/persons", this.person).then(() => {
-      //   this.$router.push("/persons/" + this.$route.params.id);
-      // });
+      if (!this.$route.params.id) {
+        db.post("/persons", data).then(() => {
+          this.$router.push("/persons");
+        });
+      }
+      db.put("/persons", Object.assign(data, {id: this.$route.params.id}) ).then(() => {
+        this.$router.push("/persons/" + this.$route.params.id);
+      });
     },
   },
-  emits: ['onSubmitted'],
   components: { TLoading, TForm },
 };
 </script>
