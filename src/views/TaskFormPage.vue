@@ -21,28 +21,15 @@
         <div class="text-bold">{{ endToDisplay }}</div>
       </li>
     </ul>
-    <form @submit="onSubmit">
-      <t-control
-        v-for="item in controlsArray"
-        :key="item"
-        :control="item"
-        :type="controls[item].type"
-        :label="controls[item].label"
-        :value="task[item]"
-        :options="controls[item].options"
-        @has-input="onHasInput"
-      />
-      <t-button label="submit"/>
-    </form>
+    <t-form :controls="controls" @submitted="onSubmitted"/>
   </template>
 </template>
 
 <script>
 import TLoading from "../components/TLoading.vue";
-import TControl from "../components/TControl.vue";
+import TForm from '../components/TForm.vue'
 import db from "../utils/db.js";
 import { formatDate } from "@/utils/dateUtils";
-import TButton from "../components/TButton.vue";
 
 export default {
   name: "TaskFormPage",
@@ -51,36 +38,51 @@ export default {
     return {
       loading: true,
       project: {},
-      task: {
-        task: "",
-        description: "",
-        status: "",
-        priority: "",
-        taskdate: "",
-        projectid: this.$route.params.projectid,
-      },
+      projectid: '',
       controls: {
         task: {
           type: "text",
           label: "task name",
+          initialValue: "",
+          validationRules: [
+            {rule: 'required', message: 'please enter the task name'},
+            {rule: 'minLength', par: 2, message: 'minimum length is 2 characters'},
+            {rule: 'maxLength', par: 50, message: 'maximum length is 50 characters'}
+          ]
         },
         description: {
           type: "textarea",
           label: "description",
+          initialValue: '',
+          validationRules: []
         },
         taskdate: {
           type: "date",
           label: "deadline",
+          initialValue: '',
+          validationRules: [
+            {rule: 'required', message: 'please enter the task name'},
+            {rule: 'finishInPast', message: 'the finish date must be in the future'}
+            //compare finish date of project and task => task cant be finishing later than project
+          ]
         },
         status: {
           label: "status",
           type: "select",
           options: ["", "started", "done"],
+          initialValue: '',
+          validationRules: [
+            {rule: 'required', message: 'please select status of this task'},
+          ]
         },
         priority: {
           label: "priority",
           type: "select",
           options: ["", "low", "standard", "high"],
+          initialValue: '',
+          validationRules: [
+            {rule: 'required', message: 'please select priority of this task'},
+          ]
         },
       },
     };
@@ -90,7 +92,7 @@ export default {
       if (this.$route.params.taskid) return "edit task";
       return "add task";
     },
-    controlsArray() {
+    controlsKeys() {
       return Object.keys(this.controls);
     },
     startToDisplay() {
@@ -109,10 +111,13 @@ export default {
     } else {
       db.get("/tasks/" + this.$route.params.taskid)
         .then((record) => {
-          this.task = record;
+          this.controlsKeys.forEach(control => {
+            this.controls[control].initialValue = record[control]
+          });
+          this.projectid = record.projectid
         })
         .then(() => {
-          db.get("/projects/" + this.task.projectid).then((projectRecord) => {
+          db.get("/projects/" + this.projectid).then((projectRecord) => {
             this.project = projectRecord;
             this.loading = false;
           });
@@ -120,30 +125,18 @@ export default {
     }
   },
   methods: {
-    onHasInput(payload) {
-      this.task[payload.control] = payload.value;
-    },
-    onSubmit(event) {
-      event.preventDefault();
-
+    onSubmitted(data) {
       if (this.$route.params.projectid) {
-        db.post("/tasks", this.task).then(() => {
+        db.post("/tasks", Object.assign(data, {projectid: this.$route.params.projectid})).then(() => {
           this.$router.push("/projects/" + this.$route.params.projectid);
         });
       } else {
-        db.put("/tasks/" + this.$route.params.taskid, {
-          id: this.task.id,
-          task: this.task.task,
-          description: this.task.description,
-          status: this.task.status,
-          priority: this.task.priority,
-          taskdate: this.task.taskdate,
-        }).then(() => {
-          this.$router.push("/projects/" + this.task.projectid);
+        db.put("/tasks/" + this.$route.params.taskid, Object.assign(data, {id: this.$route.params.taskid})).then(() => {
+          this.$router.push("/projects/" + this.projectid);
         });
       }
     },
   },
-  components: { TLoading, TControl, TButton },
+  components: { TLoading, TForm },
 };
-</script>
+</script>Control, TButton

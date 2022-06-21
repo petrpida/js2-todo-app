@@ -44,7 +44,7 @@ export default {
           initialValue: "",
           validationRules: [
             {rule: 'required', message: 'please enter the finish date of this project'},
-            {rule: 'finishInPast', message: 'the finish date must be in future'}
+            {rule: 'finishInPast', message: 'the finish date must be in the future'}
           ]
         },
       },
