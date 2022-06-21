@@ -1,7 +1,3 @@
-
-
-
-
 export const formatDate = function (dbDateString) {
 
   return dbDateString.split('-') // ['2022', '01', '09']
@@ -11,3 +7,6 @@ export const formatDate = function (dbDateString) {
     .reverse().join('.') // '9.1.2022'
 }
 
+export const beforeToday = function (date) {
+  return new Date(date).getTime() > new Date().getTime()
+}

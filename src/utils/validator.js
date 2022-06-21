@@ -1,3 +1,5 @@
+import { beforeToday } from "./dateUtils.js"
+
 export default {
 
     required (v) {
@@ -10,5 +12,8 @@ export default {
 
     maxLength (v, par) {
         return typeof v === 'string' && v.length <= par
+    },
+    finishInPast (v) {
+        return beforeToday(v)
     }
 }

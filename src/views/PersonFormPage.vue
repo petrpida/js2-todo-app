@@ -42,7 +42,7 @@ export default {
           label: "email",
           initialValue: '',
           validationRules: [
-            {rule: 'required', message: 'please enter your first name'},
+            {rule: 'required', message: 'please enter your email'},
             ]
         },
         phone: {
