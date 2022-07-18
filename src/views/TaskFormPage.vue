@@ -139,4 +139,4 @@ export default {
   },
   components: { TLoading, TForm },
 };
-</script>Control, TButton
+</script>

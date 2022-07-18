@@ -9,8 +9,8 @@
       <t-button @clicked="onClicked" label="add new" />
     </div>
     <t-list
-      title="osoba"
-      titleRight="kontakty"
+      title="person"
+      titleRight="contact"
       :items="personsToDisplay"
       route-to="persons"
     />
